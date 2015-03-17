@@ -1,0 +1,26 @@
+{
+  "name": "WeCare",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CareU/WeCare-node.git"
+  },
+  "keywords": [
+    "pm2.5"
+  ],
+  "author": "Xu Lvcai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CareU/WeCare-node/issues"
+  },
+  "homepage": "https://github.com/CareU/WeCare-node",
+  "dependencies": {
+    "restify": "^3.0.0"
+  }
+}
