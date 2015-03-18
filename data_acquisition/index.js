@@ -1,0 +1,1 @@
+exports.Acquirer = require('./acquirer').Acquirer;

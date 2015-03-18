@@ -2,7 +2,7 @@
 
 var restify = require('restify');
 
-var dataAquirer = require('./dataAcquirer');
+var Acquirer = require('./data_acquisition').Acquirer;
 
 var server = restify.createServer({
   name: 'WeCare',
@@ -18,7 +18,8 @@ server.get('/echo/:name', function (req, res, next) {
   return next();
 });
 
-dataAquirer.acquire();
+var acquirer = new Acquirer();
+acquirer.acquire();
 
 server.listen(8080, function () {
   console.log('%s listening at %s', server.name, server.url);
