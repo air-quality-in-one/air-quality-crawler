@@ -11,11 +11,12 @@ function Acquirer () {
 Acquirer.prototype.acquire = function () {
 	var self = this;
 	console.log("acquiring data ... ");
-	setInterval(load_data, 60*1000);
+	loadData();
+	//setInterval(load_data, 60*1000);
 }
 
 
-function load_data() {
+function loadData() {
 	console.log("before load data ... ");
 	var currentHour = new Date().getHours();
 	if (currentHour > lastUpdatedHour) {
