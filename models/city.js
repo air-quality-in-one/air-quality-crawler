@@ -26,4 +26,5 @@ CitySchema.method('toJSON', function() {
     };
  });
 
+
 module.exports = mongoose.model('City', CitySchema);

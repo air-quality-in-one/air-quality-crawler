@@ -40,11 +40,16 @@ function load_all_city (callback) {
 					return callback(err);
 				}
 				console.log("Result : " + JSON.stringify(result));
-				City.create(result, function (error) {
-					if (error) {
-						return callback(error);
+				City.remove(function (err) {
+					if (err) {
+						return callback(err);
 					}
-					return callback(null);
+					City.create(result, function (error) {
+						if (error) {
+							return callback(error);
+						}
+						return callback(null);
+					});
 				});
 			});
 		} else {
