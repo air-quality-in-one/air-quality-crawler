@@ -1,8 +1,10 @@
 'use strict';
 
-var restify = require('restify');
+var restify = require('restify'),
+	mongoose = require('mongoose');
 
-var Acquirer = require('./data_acquisition').Acquirer;
+var Acquirer = require('./data_acquisition').Acquirer,
+	settings = require('./config');
 
 var server = restify.createServer({
   name: 'WeCare',
@@ -18,9 +20,20 @@ server.get('/echo/:name', function (req, res, next) {
   return next();
 });
 
-var acquirer = new Acquirer();
-acquirer.acquire();
+mongoose.connect(settings.database.uri, function(err) {
+    if (err) {
+        throw err;
+    }
 
-server.listen(8080, function () {
-  console.log('%s listening at %s', server.name, server.url);
+    var acquirer = new Acquirer();
+	acquirer.acquire();
+
+	//server.listen(8080, function () {
+  	//console.log('%s listening at %s', server.name, server.url);
+	//});
 });
+
+
+
+
+

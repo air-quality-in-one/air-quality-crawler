@@ -22,6 +22,7 @@
   "homepage": "https://github.com/CareU/WeCare-node",
   "dependencies": {
     "cheerio": "^0.18.0",
+    "mongoose": "^3.8.25",
     "needle": "^0.8.2",
     "pm25in": "0.0.4",
     "restify": "^3.0.0"

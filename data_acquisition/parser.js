@@ -7,14 +7,19 @@ function Parser () {
 };
 
 Parser.parseAllCities = function (data, callback) {
-	console.log(data);
+	// console.log(data);
 	var $ = cheerio.load(data);
-	// body > div.container > div.span12.cities > div.all > div.bottom > ul
-	var cssPath = "body > div.container > div.span12.cities > div.all > div.bottom > ul > div:nth-child(2)";
+	var cssPath = "body > div.container > div.span12.cities > div.all > div.bottom > ul > div:nth-child(2) > li > a";
+	var citySet = [];
 	$(cssPath).each(function(i, elem) {
-		console.log("div is " + $(this).text());
+		var city = {
+			spell : $(elem).attr('href').slice(1),
+			name : $(elem).text()
+		};
+		//console.log("City is " + JSON.stringify(city));
+		citySet.push(city);
 	});
-	callback(null);
+	callback(null, citySet);
 };
 
 module.exports = Parser;
