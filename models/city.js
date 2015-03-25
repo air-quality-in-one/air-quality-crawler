@@ -14,6 +14,10 @@ var CitySchema = new Schema({
         type: String,
         required: true,
         trim: true
+    },
+    hotspot: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -22,7 +26,8 @@ CitySchema.method('toJSON', function() {
     return {
         id: city._id,
         spell: city.spell,
-        name: city.name
+        name: city.name,
+        hotspot : city.hotspot
     };
  });
 
