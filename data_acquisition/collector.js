@@ -1,5 +1,6 @@
 'use strict';
 var needle = require('needle');
+var _ = require('underscore');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 
@@ -28,6 +29,7 @@ Collector.prototype.start = function () {
 			self.emit("success");
 		}
 	});
+
 }
 
 function load_all_city (callback) {
@@ -39,7 +41,7 @@ function load_all_city (callback) {
 				if (err) {
 					return callback(err);
 				}
-				console.log("Result : " + JSON.stringify(result));
+				//console.log("Result : " + JSON.stringify(result));
 				City.remove(function (err) {
 					if (err) {
 						return callback(err);
@@ -48,13 +50,28 @@ function load_all_city (callback) {
 						if (error) {
 							return callback(error);
 						}
-						return callback(null);
+						return load_city_detail(result, callback);
 					});
 				});
 			});
 		} else {
 			callback('error');
 		}
+	});
+}
+
+function load_city_detail (cities, callback) {
+	_.each(cities, function (city) {
+		//console.log("City : " + JSON.stringify(city));
+		var url = "http://pm25.in/" + city.spell;
+		console.log("Loading detail of City : " + city.spell);
+		needle.get(url, options, function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+				console.log("Detail is " + response.body);
+			} else {
+				callback('error');
+			}
+		});
 	});
 }
 
