@@ -21,6 +21,17 @@ var CitySchema = new Schema({
     }
 });
 
+CitySchema.static('findAll', function(callback) {
+    this.find({}, function(err, cities) {
+        if (err) {
+            return callback(err);
+        } else {
+            console.log("Loaded cities : " + JSON.stringify(cities));
+            return callback(null, cities);
+        }
+    });
+});
+
 CitySchema.method('toJSON', function() {
     var city = this.toObject();
     return {
