@@ -11,6 +11,7 @@ var Queue = require('./job_queue');
 var reloadCity = false;
 
 var options = {
+  proxy : 'http://10.64.240.214:3128',
   decode : false,
   parse : true
 }
@@ -84,6 +85,7 @@ function  load_cities_from_web(callback) {
 }
 
 function load_city_detail (cities, callback) {
+	/*
 	var queue = new Queue('load_city_detail');
 	for (var i = 0; i < cities.length; i++) {
 		var city = cities[i];
@@ -96,26 +98,56 @@ function load_city_detail (cities, callback) {
 			}
 		});
 	}
-		/*
-		var url = "http://pm25.in/" + city.spell;
-		console.log("Loading detail of City : " + city.spell);
+*/
+var url = "http://pm25.in/shanghai";
+		console.log("Loading detail of City : shanghai");
 		needle.get(url, options, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				console.log("Detail is " + response.body);
+				Parser.parseCityDetail(response.body, 
+					function (err, summary, stations, history) {
+						if (err) {
+							console.log("parse error");
+							//done("parse error");
+						} else {
+							console.log("Summary is " + JSON.stringify(summary));
+							console.log("Stations is " + JSON.stringify(stations));
+							//done(null);
+						}
+				});
 			} else {
-				callback('error');
+				console.log("load error : " + response);
+				//done("load error");
 			}
 		});
-		*/
 
+/*
 	queue.onJob(function (job, done) {
 		console.log("Processing job : " + JSON.stringify(job));
-		done(null);
+		var url = "http://pm25.in/shanghai";
+		console.log("Loading detail of City : shanghai");
+		needle.get(url, options, function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+				console.log("Detail is " + response.body);
+				Parser.parseCityDetail(response.body, 
+					function (err, summary, stations, history) {
+						if (err) {
+							done("parse error");
+						} else {
+							console.log("Summary is " + summary);
+							done(null);
+						}
+				});
+			} else {
+				done("load error");
+			}
+		});
+		
 	}).onFinished(function () {
 		console.log("Finish all jobs");
 		callback(null);
 	}).start();
-	
+*/	
 }
 
 module.exports = Collector;
