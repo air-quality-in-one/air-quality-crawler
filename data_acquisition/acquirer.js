@@ -24,6 +24,7 @@ function loadData() {
 			console.log("other guy is loading data ... ");
 			return;
 		}
+		loading = true;
 		console.log("loading data ... ");
 
 		var collector = new Collector();
