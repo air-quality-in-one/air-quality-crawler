@@ -12,7 +12,7 @@ Acquirer.prototype.acquire = function () {
 	var self = this;
 	console.log("acquiring data ... ");
 	//loadData();
-	setInterval(load_data, 60*1000);
+	setInterval(loadData, 60*1000);
 }
 
 
