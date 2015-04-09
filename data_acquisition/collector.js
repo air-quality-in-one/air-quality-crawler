@@ -33,9 +33,7 @@ Collector.prototype.start = function () {
 		if (error) {
 			self.emit("error");
 		} else {
-			var new_cities = [];
-			new_cities.push({spell : 'shanghai'});
-			load_city_detail(new_cities, function (err) {
+			load_city_detail(cities, function (err) {
 				if (err) {
 					self.emit("error");
 				} else {
@@ -64,7 +62,7 @@ function  load_cities_from_web(callback) {
 	var url = "http://pm25.in/";
 	needle.get(url, options, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-			console.log(response.body);
+			//console.log(response.body);
 			Parser.parseAllCities(response.body, function (err, result) {
 				if (err) {
 					return callback(err);
@@ -83,7 +81,7 @@ function  load_cities_from_web(callback) {
 				});
 			});
 		} else {
-			console.log(response.statusCode);
+			//console.log(response.statusCode);
 			callback('error');
 		}
 	});
@@ -125,8 +123,8 @@ function load_detail(city, done) {
 					if (err) {
 						done("parse error");
 					} else {
-						console.log("Summary is " + JSON.stringify(summary));
-						console.log("Stations is " + JSON.stringify(stations));
+						//console.log("Summary is " + JSON.stringify(summary));
+						//console.log("Stations is " + JSON.stringify(stations));
 						Station.create(stations, function (err, stationArray) {
 							if (err) {
 								return done("db error");
@@ -135,14 +133,14 @@ function load_detail(city, done) {
 							var stationIdArray = _.map(stationArray, function (detail) {
 								return detail.id;
 							});
-							console.log("Result is " + JSON.stringify(stationArray));
-							console.log("Id is " + JSON.stringify(stationIdArray));
+							//console.log("Result is " + JSON.stringify(stationArray));
+							//console.log("Id is " + JSON.stringify(stationIdArray));
 							Summary.create(summary, function (err, summaryRecord) {
 								if (err) {
 									return done("db error");
 								}
 
-								console.log("summaryRecord is " + JSON.stringify(summaryRecord));
+								//console.log("summaryRecord is " + JSON.stringify(summaryRecord));
 								var airQuality = {
 									city : city,
 									time_update : summary.time_update,
@@ -154,7 +152,7 @@ function load_detail(city, done) {
 									if (err) {
 										return done("db error");
 									}
-									console.log("qualityRecord is " + JSON.stringify(qualityRecord));
+									//console.log("qualityRecord is " + JSON.stringify(qualityRecord));
 									return done(null);
 								});
 							});
