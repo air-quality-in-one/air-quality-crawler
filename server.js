@@ -28,9 +28,9 @@ mongoose.connect(settings.database.uri, function(err) {
     var acquirer = new Acquirer();
 	acquirer.acquire();
 
-	//server.listen(8080, function () {
-  	//console.log('%s listening at %s', server.name, server.url);
-	//});
+	server.listen((process.env.PORT || 5000), function () {
+  	console.log('%s listening at %s', server.name, server.url);
+	});
 });
 
 

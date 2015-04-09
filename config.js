@@ -2,8 +2,8 @@
 
 var settings = {
 	database : {
-		uri : "mongodb://localhost/wecare",
-		jobs : "mongodb://localhost/jobs"
+		uri : "mongodb://RBVryOsxqiuO:dhfzUCWsvbut@mongosoup-cont002.mongosoup.de:32488/cc_RBVryOsxqiuO/wecare",
+		jobs : "mongodb://RBVryOsxqiuO:dhfzUCWsvbut@mongosoup-cont002.mongosoup.de:32488/cc_RBVryOsxqiuO/jobs"
 	}
 };
 

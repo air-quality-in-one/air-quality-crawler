@@ -49,8 +49,7 @@ Parser.parseCityDetail = function (data, callback) {
 	var $ = cheerio.load(data);
 	var summary = parseCitySummary($);
 	var stations = parseCityStationDetail($);
-	var history = parseCityHistory($);
-	callback(null, summary, stations, history);
+	callback(null, summary, stations);
 };
 
 function parseCitySummary (data) {
@@ -119,10 +118,6 @@ function parseCityStationDetail (data) {
 		
 	});
 	return stations;
-}
-
-function parseCityHistory (data) {
-	return '';
 }
 
 function parseLevelAndQuality(data) {

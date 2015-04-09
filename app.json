@@ -1,0 +1,7 @@
+{
+  "name": "WeCare Nodejs Server",
+  "description": "we care",
+  "repository": "https://github.com/CareU/WeCare-node",
+  "logo": "https://github.com/CareU/WeCare-node",
+  "keywords": ["node", "restify", "air"]
+}
