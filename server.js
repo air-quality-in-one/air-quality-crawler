@@ -1,5 +1,7 @@
 'use strict';
 
+require('newrelic');
+
 var restify = require('restify'),
 	mongoose = require('mongoose');
 

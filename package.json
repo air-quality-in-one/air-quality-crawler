@@ -28,6 +28,8 @@
     "mongojs": "^0.18.2",
     "mongoose": "^4.0.1",
     "needle": "^0.8.2",
+    "newrelic": "^1.18.1",
+    "node-schedule": "^0.2.6",
     "restify": "^3.0.0",
     "underscore": "^1.8.2",
     "uuid": "^2.0.1"
