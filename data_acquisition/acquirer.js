@@ -1,18 +1,22 @@
 'use strict';
 
+var CronJob = require('cron').CronJob;
+
 var Collector = require('./collector');
 var lastUpdatedHour = 0;
 var loading = false;
 
 function Acquirer () {
-
+	this.job = new CronJob('00 15 * * * *', 
+		loadData, null, true, 'Asia/Shanghai');
 }
 
 Acquirer.prototype.acquire = function () {
 	var self = this;
 	console.log("acquiring data ... ");
 	//loadData();
-	setInterval(loadData, 60*1000);
+	//setInterval(loadData, 60*1000);
+	self.job.start();
 }
 
 
