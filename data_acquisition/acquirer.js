@@ -8,7 +8,7 @@ var loading = false;
 
 function Acquirer () {
 	this.job = new CronJob('00 15 * * * *', 
-		loadData, null, true, 'Asia/Shanghai');
+		loadData, null, false, 'Asia/Shanghai');
 }
 
 Acquirer.prototype.acquire = function () {
