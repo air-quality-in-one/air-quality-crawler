@@ -4,7 +4,7 @@ var CronJob = require('cron').CronJob;
 
 function Aggregator () {
 	this.job = new CronJob('00 30 00 * * *', 
-		loadData, null, false, 'Asia/Shanghai');
+		null, null, false, 'Asia/Shanghai');
 }
 
 Aggregator.prototype.start = function () {

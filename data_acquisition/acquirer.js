@@ -7,7 +7,7 @@ var lastUpdatedHour = 0;
 var loading = false;
 
 function Acquirer () {
-	this.job = new CronJob('00 15 * * * *', 
+	this.job = new CronJob('00 30 * * * *', 
 		loadData, null, false, 'Asia/Shanghai');
 }
 
