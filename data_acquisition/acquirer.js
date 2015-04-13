@@ -11,11 +11,9 @@ function Acquirer () {
 		loadData, null, false, 'Asia/Shanghai');
 }
 
-Acquirer.prototype.acquire = function () {
+Acquirer.prototype.start = function () {
 	var self = this;
 	console.log("acquiring data ... ");
-	//loadData();
-	//setInterval(loadData, 60*1000);
 	self.job.start();
 }
 

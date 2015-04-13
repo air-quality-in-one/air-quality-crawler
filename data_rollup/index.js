@@ -1,0 +1,1 @@
+exports.Aggregator = require('./aggregator').Aggregator;

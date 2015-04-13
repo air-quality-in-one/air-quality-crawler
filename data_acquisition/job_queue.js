@@ -5,7 +5,15 @@ var async   = require('async');
 
 var settings = require('../config');
 
-var db = mongojs(settings.database.jobs);
+var dbUri;
+// check if run on heroku
+if (process.env.NODE_ENV === 'production') {
+  dbUri = settings.product_db.uri;
+} else {
+  dbUri = settings.database.jobs;
+}
+
+var db = mongojs(dbUri);
 
 var defaults = {
   maxAttempts : 1,
