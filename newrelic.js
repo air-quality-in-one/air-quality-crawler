@@ -8,7 +8,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name : ['WeCare'],
+  app_name : ['air-quality-crawler'],
   /**
    * Your New Relic license key.
    */
