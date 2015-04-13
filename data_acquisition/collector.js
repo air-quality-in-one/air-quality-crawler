@@ -1,8 +1,10 @@
 'use strict';
 var needle = require('needle');
-var _ = require('underscore');
+var _ = require('lodash');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
+
+var moment = require('moment-timezone');
 
 var City = require('../models/city');
 var Station = require('../models/station_detail');
@@ -15,6 +17,7 @@ var Queue = require('./job_queue');
 var reloadCity = true;
 
 var options = {
+  //proxy : 'http://10.64.240.214:3128',
   decode : false,
   parse : true
 }
@@ -22,6 +25,8 @@ var options = {
 
 function Collector () {
 	console.log("initializing Collector ... ");
+	this.lastUpdateTime = moment.tz("2000-01-01T00:00:00.000Z", "Asia/Shanghai");
+	//this.lastUpdateTime = moment.tz("2015-04-13T17:00:00+08:00", "Asia/Shanghai");
 	EventEmitter.call(this);
 };
 
@@ -29,20 +34,47 @@ util.inherits(Collector, EventEmitter);
 
 Collector.prototype.start = function () {
 	var self = this;
-	load_all_cities(function (error, cities) {
+	check_need_load_data(function (error, newlyUpdateTime) {
 		if (error) {
 			self.emit("error");
 		} else {
-			load_city_detail(cities, function (err) {
-				if (err) {
-					self.emit("error");
-				} else {
-					self.emit("success");
-				}
-			});
+			var time = moment.tz(newlyUpdateTime, "Asia/Shanghai");
+			if (time.isAfter(self.lastUpdateTime)) {
+				load_all_cities(function (error, cities) {
+					if (error) {
+						self.emit("error");
+					} else {
+						load_city_detail(cities, function (err) {
+							if (err) {
+								self.emit("error");
+							} else {
+								self.emit("success");
+							}
+						});
+					}
+				});
+			} else {
+				console.log("No Update Data from Web!");
+				self.emit("success");
+			}
 		}
 	});
+	
 
+}
+
+function check_need_load_data (callback) {
+	var url = "http://pm25.in/beijing";
+	needle.get(url, options, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			console.log(response.body);
+			return Parser.parseNewlyUpdateTime(response.body, callback);
+		} else {
+			console.log("Fail to load status data from web");
+			console.log(error + response);
+			return callback('error');
+		}
+	});
 }
 
 function load_all_cities (callback) {
@@ -62,7 +94,7 @@ function  load_cities_from_web(callback) {
 	var url = "http://pm25.in/";
 	needle.get(url, options, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-			//console.log(response.body);
+			console.log(response.body);
 			Parser.parseAllCities(response.body, function (err, result) {
 				if (err) {
 					return callback(err);
@@ -83,7 +115,8 @@ function  load_cities_from_web(callback) {
 				});
 			});
 		} else {
-			//console.log(response.statusCode);
+			console.log("Fail to load_cities_from_web");
+			console.log(error + response);
 			callback('error');
 		}
 	});

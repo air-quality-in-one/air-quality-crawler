@@ -1,7 +1,7 @@
 'use strict';
 
 var cheerio = require('cheerio');
-var _ = require('underscore');
+var _ = require('lodash');
 var moment = require('moment-timezone');
 
 var PollutantDataType = {
@@ -18,6 +18,13 @@ var PollutantDataType = {
 function Parser () {
 	console.log("initializing Parser ... ");
 };
+
+Parser.parseNewlyUpdateTime = function (data, callback) {
+	var $ = cheerio.load(data);
+	var newlyUpdateTime = parseUpdateTime($);
+	console.log("newlyUpdateTime : " + newlyUpdateTime);
+	return callback(null, newlyUpdateTime);
+}
 
 Parser.parseAllCities = function (data, callback) {
 	// console.log(data);

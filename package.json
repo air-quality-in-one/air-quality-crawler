@@ -33,7 +33,6 @@
     "needle": "^0.8.2",
     "newrelic": "^1.18.1",
     "restify": "^3.0.0",
-    "underscore": "^1.8.2",
     "uuid": "^2.0.1"
   }
 }
