@@ -2,6 +2,7 @@
 
 var cheerio = require('cheerio');
 var _ = require('underscore');
+var moment = require('moment-timezone');
 
 var PollutantDataType = {
 	AQI : 1,
@@ -137,11 +138,8 @@ function parseUpdateTime(data) {
 	var updateTime = $(cssPath).text().trim();
 	var idx = updateTime.indexOf("：");
 	var time = updateTime.substring(idx+1, updateTime.length);
-	idx = time.indexOf(" ");
-	var time1 = time.substring(0, idx);
-	var time2 = time.substring(idx+1, time.length);
-	var finalTime = time1+"T"+time2+"Z";
-	return finalTime;
+	var timeValue = moment.tz(time, "Asia/Shanghai").format()
+	return timeValue;
 }
 
 function parseUnit(data) {

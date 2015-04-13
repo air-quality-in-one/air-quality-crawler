@@ -70,10 +70,12 @@ function  load_cities_from_web(callback) {
 				//console.log("Result : " + JSON.stringify(result));
 				City.remove(function (err) {
 					if (err) {
+						console.log("Fail to remove all cities");
 						return callback(err);
 					}
 					City.create(result, function (error) {
 						if (error) {
+							console.log("Fail to add all cities");
 							return callback(error);
 						}
 						return callback(null, result);
@@ -88,7 +90,7 @@ function  load_cities_from_web(callback) {
 }
 
 function load_city_detail (cities, callback) {
-	var queue = new Queue('load_city_detail');
+	var queue = new Queue('load_air_quality_job');
 	_.each(cities, function (city) {
 
 		console.log("City : " + JSON.stringify(city.spell));
