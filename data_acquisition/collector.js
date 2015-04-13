@@ -15,7 +15,6 @@ var Queue = require('./job_queue');
 var reloadCity = true;
 
 var options = {
-	proxy : 'http://10.64.240.214:3128',
   decode : false,
   parse : true
 }
