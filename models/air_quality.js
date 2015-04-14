@@ -54,4 +54,43 @@ AirQualitySchema.static('loadDataXDaysBefore', function(day, callback) {
     });
 });
 
+
+AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
+    var startTime = DateUtil.getStartOfXDayBefore(day);
+    var endTime = DateUtil.getStartOfXDayBefore(day-1);
+    console.log("Try to remove AirQuality from " + startTime + " to " + endTime);
+    var query = {
+        "time_update" : {
+            "$gte" : startTime,
+            "$lt" : endTime
+        }
+    };
+    this.find(query).remove(function(err) {
+        if (err) {
+            console.log("Fail to remove AirQuality : " + err);
+            return callback(err);
+        } else {
+            console.log("Success to remove AirQuality!");
+            return callback(null);
+        }
+    });
+});
+
+AirQualitySchema.static('removeById', function(id, callback) {
+    console.log("Try to remove AirQuality : " + id);
+    var query = {
+        "id" : id
+    };
+    this.find(query).remove(function(err) {
+        if (err) {
+            console.log("Fail to remove AirQuality : " + err);
+            return callback(err);
+        } else {
+            console.log("Success to remove AirQuality!");
+            return callback(null);
+        }
+    });
+});
+
+
 module.exports = mongoose.model('AirQuality', AirQualitySchema);
