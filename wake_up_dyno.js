@@ -1,7 +1,7 @@
 var http = require('http'); //importing http
 
 var options = {
-    host: 'air-quality-crawler.herokuapp.com/',
+    host: 'aircaring.herokuapp.com/',
     port: 80,
     path: '/health'
 };
