@@ -11,10 +11,8 @@ var AQIHistorySchema = new Schema({
         trim: true
     },
     report_date : {
-    	type: Date
-    },
-    unit : {
     	type: String,
+        required: true,
         trim: true
     },
     history: [{
