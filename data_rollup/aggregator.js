@@ -8,14 +8,13 @@ var AQIHistory = require('../models/aqi_history');
 
 function Aggregator () {
 	this.job = new CronJob('00 40 12 * * *', 
-		null, null, false, 'Asia/Shanghai');
+		rollup, null, false, 'Asia/Shanghai');
 }
 
 Aggregator.prototype.start = function () {
 	var self = this;
 	console.log("aggregating data ... ");
 	self.job.start();
-	rollup();
 }
 
 
