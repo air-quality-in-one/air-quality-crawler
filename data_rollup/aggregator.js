@@ -15,8 +15,7 @@ Aggregator.prototype.start = function () {
 	var self = this;
 	console.log("aggregating data ... ");
 	self.job.start();
-	//rollup();
-	test();
+	rollup();
 }
 
 
