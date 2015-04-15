@@ -7,7 +7,7 @@ var AirQuality = require('../models/air_quality');
 var AQIHistory = require('../models/aqi_history');
 
 function Aggregator () {
-	this.job = new CronJob('00 40 12 * * *', 
+	this.job = new CronJob('00 50 12 * * *', 
 		rollup, null, false, 'Asia/Shanghai');
 }
 
@@ -20,9 +20,9 @@ Aggregator.prototype.start = function () {
 
 function rollup () {
 	console.log("rolluping data ... ");
-	AirQuality.loadDataXDaysBefore(2, function (error, qualityArray) {
+	AirQuality.loadDataXDaysBefore(1, function (error, qualityArray) {
 		if (error) {
-			console.log("Fail to load quality data 2 days before!");
+			console.log("Fail to load quality data 1 days before!");
 			return;
 		} else {
 			var historyArray = rollup_quality_history(qualityArray);

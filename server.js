@@ -10,7 +10,7 @@ var Acquirer = require('./data_acquisition').Acquirer,
 	settings = require('./config');
 
 var server = restify.createServer({
-  name: 'WeCare',
+  name: 'air-quality-crawler',
   version: '1.0.0'
 });
 server.use(restify.acceptParser(server.acceptable));
