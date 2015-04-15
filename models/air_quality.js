@@ -35,15 +35,15 @@ var AirQualitySchema = new Schema({
 
 AirQualitySchema.pre('remove', function (next) {
     var airQuality = this;
-    console.log("before remove : " + JSON.stringify(airQuality));
-    console.log("try to remove summary: " + airQuality.summary);
+    //console.log("before remove airQuality : " + JSON.stringify(airQuality));
+    //console.log("try to remove summary: " + airQuality.summary);
     Summary.findOneAndRemove({"_id" : airQuality.summary}, function (err) {
         if (err) {
             console.log("fail to remove summary: " + airQuality.summary);
         } else {
             console.log("success to remove summary: " + airQuality.summary);
         }
-        console.log("try to remove stations: " + JSON.stringify(airQuality.stations));
+        //console.log("try to remove stations: " + JSON.stringify(airQuality.stations));
         var done = _.after(airQuality.stations.length, function() {
             console.log('done remove stations!');
             return next();
@@ -77,7 +77,7 @@ AirQualitySchema.static('loadDataXDaysBefore', function(day, callback) {
         if (err) {
             return callback(err);
         } else {
-            console.log("Loaded AirQuality : " + JSON.stringify(qualityArray));
+            //console.log("Loaded AirQuality : " + JSON.stringify(qualityArray));
             return callback(null, qualityArray);
         }
     });
