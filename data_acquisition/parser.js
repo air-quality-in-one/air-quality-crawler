@@ -169,7 +169,7 @@ function parsePollutantValue(data, pollutantDataType) {
 function parsePrimaryPollutant(data) {
 	var $ = data;
 	var cssPath = "body > div.container > div.span12.avg > div.span12.caution > div.primary_pollutant > p";
-	var pollutant = $(cssPath).text().trim()replace("-</>", "");
+	var pollutant = $(cssPath).text().trim().replace("-</>", "");
 	var idx = pollutant.indexOf("：");
 	var primaryPollutant = pollutant.substring(idx+1, pollutant.length).trim();
 	return primaryPollutant;
