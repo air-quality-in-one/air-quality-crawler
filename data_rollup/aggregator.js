@@ -42,7 +42,8 @@ function rollup () {
 function rollup_quality_history (qualityArray) {
 	var qualityMap = _.groupBy(qualityArray, 'city');
 	var historyArray = _.map(qualityMap, function(quality, city) {
-		var aqiArray = [];
+		var aqiArray = new Array(24);
+		_.fill(aqiArray, "", 0, 24);
 		var date = moment.tz(quality[0].time_update, "Asia/Shanghai").format('YYYY-MM-DD');
 		_.each(_.sortBy(quality, 'time_update'), function (qualitySorted) {
 			var time = moment.tz(qualitySorted.time_update, "Asia/Shanghai");
@@ -52,7 +53,7 @@ function rollup_quality_history (qualityArray) {
 		var result = {
 			city : city,
 			report_date : date,
-			history : aqiArray
+			aqis : aqiArray
 		};
 		return result;
 	});

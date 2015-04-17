@@ -15,7 +15,7 @@ var AQIHistorySchema = new Schema({
         required: true,
         trim: true
     },
-    history: [{
+    aqis: [{
 		type: String,
         trim: true
 	}],
