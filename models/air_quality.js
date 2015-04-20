@@ -86,12 +86,12 @@ AirQualitySchema.static('loadDataXDaysBefore', function(day, callback) {
 
 AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
     var startTime = DateUtil.getStartOfXDayBefore(day);
-    var endTime = DateUtil.getStartOfXDayBefore(day-1);
+    //var endTime = DateUtil.getStartOfXDayBefore(day-1);
     console.log("Try to remove AirQuality before " + startTime);
     var query = {
         "time_update" : {
-            "$gte" : startTime,
-            "$lt" : endTime
+            //"$gte" : startTime,
+            "$lt" : startTime
         }
     };
     this.find(query).exec(function (err, qualityArray) {
