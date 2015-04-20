@@ -1,0 +1,1 @@
+exports.Scavenger = require('./scavenger').Scavenger;
