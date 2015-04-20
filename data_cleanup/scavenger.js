@@ -30,3 +30,6 @@ function cleanup () {
 		}
 	});
 }
+
+
+exports.Scavenger = Scavenger;

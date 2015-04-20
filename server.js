@@ -7,6 +7,7 @@ var restify = require('restify'),
 
 var Acquirer = require('./data_acquisition').Acquirer,
   Aggregator = require('./data_rollup').Aggregator,
+  Scavenger = require('./data_cleanup').Scavenger,
 	settings = require('./config');
 
 var server = restify.createServer({
@@ -41,7 +42,7 @@ mongoose.connect(dbUri, function(err) {
   var aggregator = new Aggregator();
   aggregator.start();
 
-  var scavenger = Scavenger();
+  var scavenger = new Scavenger();
   scavenger.start();
 
 	server.listen((process.env.PORT || 5000), function () {
