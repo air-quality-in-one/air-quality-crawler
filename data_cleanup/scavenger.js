@@ -7,7 +7,7 @@ var AirQuality = require('../models/air_quality');
 var AQIHistory = require('../models/aqi_history');
 
 function Scavenger() {
-	this.job = new CronJob('00 55 15 * * *', 
+	this.job = new CronJob('00 05 14 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
