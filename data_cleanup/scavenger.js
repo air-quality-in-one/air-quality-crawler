@@ -20,7 +20,7 @@ Scavenger.prototype.start = function () {
 
 function cleanup () {
 	console.log("cleanning up data ... ");
-	AirQuality.removeDataXDaysBefore(5, function (error) {
+	AirQuality.removeDataXDaysBefore(4, function (error) {
 		if (error) {
 			console.log("Fail to clean up quality data 3 days before!");
 			return;
