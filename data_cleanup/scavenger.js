@@ -7,7 +7,7 @@ var AirQuality = require('../models/air_quality');
 var AQIHistory = require('../models/aqi_history');
 
 function Scavenger() {
-	this.job = new CronJob('00 30 01 * * *', 
+	this.job = new CronJob('00 30 13 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -22,10 +22,10 @@ function cleanup () {
 	console.log("cleanning up data ... ");
 	AirQuality.removeDataXDaysBefore(2, function (error) {
 		if (error) {
-			console.log("Fail to clean up quality data 3 days before!");
+			console.log("Fail to clean up quality data 2 days before!");
 			return;
 		} else {
-			console.log("Success to clean up quality data 3 days before!");
+			console.log("Success to clean up quality data 2 days before!");
 			return;
 		}
 	});
