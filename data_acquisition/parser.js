@@ -22,7 +22,7 @@ function Parser () {
 Parser.parseNewlyUpdateTime = function (data, callback) {
 	var $ = cheerio.load(data);
 	var newlyUpdateTime = parseUpdateTime($);
-	console.log("newlyUpdateTime : " + newlyUpdateTime);
+	//console.log("newlyUpdateTime : " + newlyUpdateTime);
 	return callback(null, newlyUpdateTime);
 }
 
@@ -33,7 +33,7 @@ Parser.parseAllCities = function (data, callback) {
 	var hotPath = "body > div.container > div.span12.cities > div.hot > div.bottom > ul > li > a";
 	$(hotPath).each(function(i, elem) {
 		var city = $(elem).attr('href').slice(1);
-		console.log("HotCity is " + JSON.stringify(city));
+		//console.log("HotCity is " + JSON.stringify(city));
 		hotCities.push(city);
 	});
 	var cssPath = "body > div.container > div.span12.cities > div.all > div.bottom > ul > div:nth-child(2) > li > a";

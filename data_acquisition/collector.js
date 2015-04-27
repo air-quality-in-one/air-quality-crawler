@@ -126,7 +126,7 @@ function load_city_detail (cities, callback) {
 	var queue = new Queue('load_air_quality_job');
 	_.each(cities, function (city) {
 
-		console.log("City : " + JSON.stringify(city.spell));
+		//console.log("City : " + JSON.stringify(city.spell));
 		queue.createJob({spell : city.spell}, function (err, document) {
 			if (err) {
 				console.log("Error when create job for " + city.spell);
@@ -137,7 +137,7 @@ function load_city_detail (cities, callback) {
 	});
 
 	queue.onJob(function (job, done) {
-		console.log("Processing job : " + JSON.stringify(job));
+		//console.log("Processing job : " + JSON.stringify(job));
 		//done(null);
 		load_detail(job.spell, done);
 	}).onFinished(function () {
@@ -149,7 +149,7 @@ function load_city_detail (cities, callback) {
 
 function load_detail(city, done) {
 	var url = "http://pm25.in/" + city;
-	console.log("Loading detail of City : " + city);
+	//console.log("Loading detail of City : " + city);
 	needle.get(url, options, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 			//console.log("Detail is " + response.body);

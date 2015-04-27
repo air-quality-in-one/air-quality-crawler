@@ -41,7 +41,7 @@ AirQualitySchema.pre('remove', function (next) {
         if (err) {
             console.log("fail to remove summary: " + airQuality.summary);
         } else {
-            console.log("success to remove summary: " + airQuality.summary);
+            //console.log("success to remove summary: " + airQuality.summary);
         }
         //console.log("try to remove stations: " + JSON.stringify(airQuality.stations));
         var done = _.after(airQuality.stations.length, function() {
@@ -53,7 +53,7 @@ AirQualitySchema.pre('remove', function (next) {
                 if (err) {
                     console.log("fail to remove station: " + station);
                 } else {
-                    console.log("success to remove station: " + station);
+                    //console.log("success to remove station: " + station);
                 }
                 done();
             });
@@ -107,7 +107,7 @@ AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
                     console.log("Fail to remove AirQuality : " + err);
                     
                 } else {
-                    console.log("Success to remove AirQuality!");
+                    //console.log("Success to remove AirQuality!");
                 }
                 done();
             });
