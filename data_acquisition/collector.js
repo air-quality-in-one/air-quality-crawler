@@ -67,7 +67,7 @@ function check_need_load_data (callback) {
 	var url = "http://pm25.in/beijing";
 	needle.get(url, options, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-			console.log(response.body);
+			//console.log(response.body);
 			return Parser.parseNewlyUpdateTime(response.body, callback);
 		} else {
 			console.log("Fail to load status data from web");
@@ -94,7 +94,7 @@ function  load_cities_from_web(callback) {
 	var url = "http://pm25.in/";
 	needle.get(url, options, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-			console.log(response.body);
+			//console.log(response.body);
 			Parser.parseAllCities(response.body, function (err, result) {
 				if (err) {
 					return callback(err);
@@ -131,7 +131,7 @@ function load_city_detail (cities, callback) {
 			if (err) {
 				console.log("Error when create job for " + city.spell);
 			} else {
-				console.log("Success to create job : " + JSON.stringify(document));
+				//console.log("Success to create job : " + JSON.stringify(document));
 			}
 		});
 	});
