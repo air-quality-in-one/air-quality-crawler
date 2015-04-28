@@ -45,7 +45,7 @@ AirQualitySchema.pre('remove', function (next) {
         }
         //console.log("try to remove stations: " + JSON.stringify(airQuality.stations));
         var done = _.after(airQuality.stations.length, function() {
-            console.log('done remove stations!');
+            //console.log('done remove stations!');
             return next();
         });
         _.each(airQuality.stations, function (station) {
