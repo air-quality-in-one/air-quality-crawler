@@ -94,22 +94,24 @@ AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
             "$lt" : startTime
         }
     };
-    this.find(query).exec(function (err, qualityArray) {
+    this.find(query).select('_id').exec(function (err, qualityIdArray) {
         //console.log("Try to remove AirQuality : " + JSON.stringify(qualityArray));
-        console.log("Try to remove AirQuality, total number : " + qualityArray.length);
-        var done = _.after(qualityArray.length, function() {
+        console.log("Try to remove AirQuality, total number : " + qualityIdArray.length);
+        var done = _.after(qualityIdArray.length, function() {
             console.log('done remove AirQuality list!');
             return callback(null);
         });
-        _.each(qualityArray, function (quality) {
-            quality.remove(function(err) {
-                if (err) {
-                    console.log("Fail to remove AirQuality : " + err);
-                    
-                } else {
-                    //console.log("Success to remove AirQuality!");
-                }
-                done();
+        _.each(qualityIdArray, function (qualityId) {
+            AirQualitySchema.findById(qualityId, function (err, quality) {
+                quality.remove(function(error) {
+                    if (error) {
+                        console.log("Fail to remove AirQuality : " + error);
+                        
+                    } else {
+                        //console.log("Success to remove AirQuality!");
+                    }
+                    done();
+                });
             });
         });
         
