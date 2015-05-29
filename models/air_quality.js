@@ -102,6 +102,7 @@ AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
             return callback(null);
         });
         _.each(qualityIdArray, function (qualityId) {
+            console.log("Try to remove AirQuality : " + qualityId);
             AirQualitySchema.findById(qualityId, function (err, quality) {
                 quality.remove(function(error) {
                     if (error) {
