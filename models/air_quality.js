@@ -122,4 +122,4 @@ AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
     });
 });
 
-module.exports = AirQuality;
+module.exports = mongoose.model('AirQuality', AirQualitySchema);
