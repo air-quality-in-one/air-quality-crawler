@@ -33,6 +33,8 @@ var AirQualitySchema = new Schema({
 	}],
 });
 
+var AirQuality = mongoose.model('AirQuality', AirQualitySchema);
+
 AirQualitySchema.pre('remove', function (next) {
     var airQuality = this;
     //console.log("before remove airQuality : " + JSON.stringify(airQuality));
@@ -85,6 +87,7 @@ AirQualitySchema.static('loadDataXDaysBefore', function(day, callback) {
 
 
 AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
+    var self = this;
     var startTime = DateUtil.getStartOfXDayBefore(day);
     //var endTime = DateUtil.getStartOfXDayBefore(day-1);
     console.log("Try to remove AirQuality before " + startTime);
@@ -103,7 +106,7 @@ AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
         });
         _.each(qualityIdArray, function (qualityId) {
             console.log("Try to remove AirQuality : " + qualityId._id);
-            AirQualitySchema.findById(qualityId._id, function (err, quality) {
+            AirQuality.findById(qualityId._id, function (err, quality) {
                 quality.remove(function(error) {
                     if (error) {
                         console.log("Fail to remove AirQuality : " + error);
@@ -119,4 +122,4 @@ AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
     });
 });
 
-module.exports = mongoose.model('AirQuality', AirQualitySchema);
+module.exports = AirQuality;
