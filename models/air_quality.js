@@ -144,8 +144,9 @@ AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
             OverdueAirQuality.create(overdueAirQuality, function (err, result) {
                 if (err) {
                     //console.log("Fail to insert OverdueAirQuality : " + err);
-                    done();
+                    
                 } else {
+                    /**
                     var overdueSummary = { summary_id : quality.summary};
                     OverdueSummary.create(overdueSummary, function (err, result) {
                         if (err) {
@@ -169,7 +170,9 @@ AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
                             });
                         }
                     });
+                    **/
                 }
+                done();
             });
         });
     });
