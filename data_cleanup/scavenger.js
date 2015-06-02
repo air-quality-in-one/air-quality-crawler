@@ -13,8 +13,9 @@ function Scavenger() {
 
 Scavenger.prototype.start = function () {
 	var self = this;
-	console.log("cleanning up data ... ");
+	console.log("starting data scavenger ... ");
 	self.job.start();
+	console.log("successfully start data scavenger!");
 }
 
 
