@@ -139,6 +139,7 @@ AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
             return callback(null);
         });
         _.each(qualityArray, function (quality) {
+            console.log("Try to insert AirQuality : " + quality);
             var overdueAirQuality = { air_quality_id : quality._id };
             OverdueAirQuality.create(overdueAirQuality, function (err, result) {
                 if (err) {
