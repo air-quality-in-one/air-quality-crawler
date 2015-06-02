@@ -29,6 +29,16 @@ function cleanup () {
 			return;
 		}
 	});
+
+	AirQuality.prepareDataXDaysBefore(2, function (error) {
+		if (error) {
+			console.log("Fail to prepare quality data 2 days before!");
+			return;
+		} else {
+			console.log("Success to prepare quality data 2 days before!");
+			return;
+		}
+	});
 }
 
 
