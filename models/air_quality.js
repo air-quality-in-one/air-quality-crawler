@@ -124,7 +124,7 @@ AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
 AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
     var startTime = DateUtil.getStartOfXDayBefore(day);
     //var endTime = DateUtil.getStartOfXDayBefore(day-1);
-    console.log("Try to remove AirQuality before " + startTime);
+    console.log("Try to prepare AirQuality before " + startTime);
     var query = {
         "time_update" : {
             //"$gte" : startTime,
@@ -133,23 +133,23 @@ AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
     };
     this.find(query).select('_id summary stations').exec(function (err, qualityArray) {
         //console.log("Try to remove AirQuality : " + JSON.stringify(qualityArray));
-        console.log("Try to remove AirQuality, total number : " + qualityArray.length);
+        console.log("Try to prepare AirQuality, total number : " + qualityArray.length);
         var done = _.after(qualityArray.length, function() {
             console.log('done insert OverdueAirQuality list!');
             return callback(null);
         });
         _.each(qualityArray, function (quality) {
-            console.log("Try to insert AirQuality : " + quality);
+            //console.log("Try to insert AirQuality : " + quality);
             var overdueAirQuality = { air_quality_id : quality._id };
             OverdueAirQuality.create(overdueAirQuality, function (err, result) {
                 if (err) {
-                    console.log("Fail to insert OverdueAirQuality : " + err);
+                    //console.log("Fail to insert OverdueAirQuality : " + err);
                     done();
                 } else {
                     var overdueSummary = { summary_id : quality.summary};
                     OverdueSummary.create(overdueSummary, function (err, result) {
                         if (err) {
-                            console.log("Fail to insert OverdueSummary : " + err);
+                            //console.log("Fail to insert OverdueSummary : " + err);
                             done();
                         } else {
                             var finished = _.after(quality.stations.length, function() {
@@ -160,7 +160,7 @@ AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
                                 var overdueStation = { station_id : station};
                                 OverdueStation.create(overdueStation, function (err, result) {
                                     if (err) {
-                                        console.log("Fail to insert OverdueStation : " + err);
+                                        //console.log("Fail to insert OverdueStation : " + err);
                                     } else {
 
                                     }
