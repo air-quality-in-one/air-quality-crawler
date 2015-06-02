@@ -131,7 +131,7 @@ AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
             "$lt" : startTime
         }
     };
-    this.find(query).select('_id, summary, stations').exec(function (err, qualityArray) {
+    this.find(query).select('_id summary stations').exec(function (err, qualityArray) {
         //console.log("Try to remove AirQuality : " + JSON.stringify(qualityArray));
         console.log("Try to remove AirQuality, total number : " + qualityArray.length);
         var done = _.after(qualityArray.length, function() {
