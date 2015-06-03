@@ -9,7 +9,7 @@ var AQIHistory = require('../models/aqi_history');
 var OverdueAirQuality = require('../models/overdue_air_quality');
 
 function Scavenger() {
-	this.job = new CronJob('00 10 10 * * *', 
+	this.job = new CronJob('00 15 10 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -33,7 +33,7 @@ function cleanup () {
 		}
 	});*/
 
-	AirQuality.prepareDataXDaysBefore(1, function (error) {
+	AirQuality.prepareDataXDaysBefore(2, function (error) {
 		if (error) {
 			console.log("Fail to prepare quality data 2 days before!");
 			return;
