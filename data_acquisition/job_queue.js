@@ -10,7 +10,8 @@ var dbUri;
 if (process.env.NODE_ENV === 'production') {
   dbUri = settings.product_db.uri;
 } else {
-  dbUri = settings.database.jobs;
+  //dbUri = settings.database.jobs;
+  dbUri = settings.product_db.uri;
 }
 
 var db = mongojs(dbUri);
