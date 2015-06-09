@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 20 16 * * *', 
+	this.job = new CronJob('00 23 16 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
