@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 40 18 * * *', 
+	this.job = new CronJob('00 43 18 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -75,7 +75,7 @@ function removeOverdueAirQuality(airQualities) {
 	}).start();
 }
 
-function doRemoval(airQualities done) {
+function doRemoval(airQualities, done) {
 	console.log("Removing overdue air quality ... ");
 	var airQualityIds = [];
 	var summaryIds = [];
