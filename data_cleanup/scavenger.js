@@ -42,7 +42,6 @@ function cleanup () {
 			//cursor(0, 10, function(overdue_air_quality) {
 				//console.log("Success to remove : " + overdue_air_quality);
 			//});
-  removeOverdueAirQuality();
 		}
 	});
 }
