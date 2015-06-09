@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 35 17 * * *', 
+	this.job = new CronJob('00 40 17 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -50,7 +50,7 @@ function cleanup () {
 function removeOverdueAirQuality(airQualities) {
 	console.log("Removing overdue air quality ... ");
 	var queue = new Queue('remove_overdue_air_quality_job', 
-		{concurrency : 100, polling : 100});
+		{concurrency : 20});
 	_.each(airQualities, function (airQuality) {
     	queue.createJob({aqid : airQuality._id}, function (err, document) {
     		if (err) {
