@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 35 18 * * *', 
+	this.job = new CronJob('00 40 18 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -43,7 +43,13 @@ function cleanup () {
 		} else {
 			console.log("Success to prepare quality data 2 days before!");
       		//removeOverdueAirQuality(result);
-      		doRemoval(result);
+      		doRemoval(result, function (err) {
+      			if (err) {
+      				console.log("Fail to clean up quality data 2 days before!");
+      			} else {
+      				console.log("Success to clean up quality data 2 days before!");
+      			}
+      		});
 		}
 	});
 }
@@ -69,7 +75,7 @@ function removeOverdueAirQuality(airQualities) {
 	}).start();
 }
 
-function doRemoval(airQualities) {
+function doRemoval(airQualities done) {
 	console.log("Removing overdue air quality ... ");
 	var airQualityIds = [];
 	var summaryIds = [];
@@ -82,6 +88,29 @@ function doRemoval(airQualities) {
 	console.log("airQualityIds length : " + airQualityIds.length);
 	console.log("summaryIds length : " + summaryIds.length);
 	console.log("stationIds length : " + stationIds.length);
+
+	Station.remove({ id: { $in: stationIds } }, function (err) {
+		if (err) {
+			console.log("Fail to remove stations!");
+			return done(err);
+		} else {
+			Summary.remove({ id: { $in: summaryIds } }, function (err) {
+				if (err) {
+					console.log("Fail to remove summary!");
+					return done(err);
+				} else {
+					AirQuality.remove(function(err) {
+						if (err) {
+							console.log("Fail to remove AirQuality!");
+							return done(err);
+						} else {
+							return done(null);
+						}
+					});
+				}
+			});
+		}
+	});
 }
 
 function removeDetail(aqid, done) {
