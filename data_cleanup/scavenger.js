@@ -8,10 +8,9 @@ var AQIHistory = require('../models/aqi_history');
 
 var Queue = require('../utils/job_queue');
 
-var OverdueAirQuality = require('../models/overdue_air_quality');
 
 function Scavenger() {
-	this.job = new CronJob('00 32 15 * * *', 
+	this.job = new CronJob('00 41 15 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -47,18 +46,25 @@ function cleanup () {
 }
 
 function removeOverdueAirQuality(airQualities) {
-  var queue = new Queue('remove_overdue_air_quality_job');
-  _.each(airQualities, function (airQuality) {
-
-    //console.log("City : " + JSON.stringify(city.spell));
-    queue.createJob({aqid : airQuality._id}, function (err, document) {
-      if (err) {
-        console.log("Error when create job for " + airQuality._id);
-      } else {
-        //console.log("Success to create job : " + JSON.stringify(document));
-      }
+	var queue = new Queue('remove_overdue_air_quality_job');
+	_.each(airQualities, function (airQuality) {
+    	queue.createJob({aqid : airQuality._id}, function (err, document) {
+    		if (err) {
+    			console.log("Error when create job for " + airQuality._id);
+    		} else {
+    			//console.log("Success to create job : " + JSON.stringify(document));
+    		}
+    	});
     });
-  });
+    queue.onJob(function (job, done) {
+		removeDetail(job.aqid, done);
+	}).onFinished(function () {
+		console.log("Finish all jobs");
+		callback(null);
+	}).start();
+}
+
+function removeDetail(aqid, done) {
 }
 
 
