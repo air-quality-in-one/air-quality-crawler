@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 00 18 * * *', 
+	this.job = new CronJob('00 03 18 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -71,11 +71,17 @@ function removeOverdueAirQuality(airQualities) {
 
 function doRemoval(airQualities) {
 	console.log("Removing overdue air quality ... ");
+	var airQualityIds = [];
+	var summaryIds = [];
+	var stationIds = [];
 	_.each(airQualities, function (airQuality) {
-		removeDetail(airQuality._id, function(err) {
-			console.log("Finish removing overdue air quality");
-		});
+		airQualityIds.push(airQuality._id);
+		summaryIds.push(airQuality.summary);
+		stationIds.push.apply(airQuality.stations);
 	});
+	console.log("airQualityIds length : " + airQualityIds.length);
+	console.log("summaryIds length : " + summaryIds.length);
+	console.log("stationIds length : " + stationIds.length);
 }
 
 function removeDetail(aqid, done) {
