@@ -82,8 +82,14 @@ function removeDetail(aqid, done) {
 							console.log("Fail to remove summary : " + airQuality.summary);
 							return done(err);
 						} else {
-							airQuality.remove();
-							return done(null);
+							airQuality.remove(function(err) {
+								if (err) {
+									console.log("Fail to remove AirQuality : " + aqid);
+									return done(err);
+								} else {
+									return done(null);
+								}
+							});
 						}
 					});
 				}
