@@ -134,46 +134,19 @@ AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
     this.find(query).select('_id').exec(function (err, qualityArray) {
         //console.log("Try to remove AirQuality : " + JSON.stringify(qualityArray));
         console.log("Try to prepare AirQuality, total number : " + qualityArray.length);
-        var done = _.after(qualityArray.length, function() {
-            console.log('done insert OverdueAirQuality list!');
-            return callback(null);
-        });
+        var overdueAirQualities = [];
         _.each(qualityArray, function (quality) {
-            //console.log("Try to insert AirQuality : " + quality);
             var overdueAirQuality = { air_quality_id : quality._id };
-            OverdueAirQuality.create(overdueAirQuality, function (err, result) {
-                if (err) {
-                    //console.log("Fail to insert OverdueAirQuality : " + err);
-                    
-                } else {
-                    /**
-                    var overdueSummary = { summary_id : quality.summary};
-                    OverdueSummary.create(overdueSummary, function (err, result) {
-                        if (err) {
-                            //console.log("Fail to insert OverdueSummary : " + err);
-                            done();
-                        } else {
-                            var finished = _.after(quality.stations.length, function() {
-                                console.log('done insert OverdueStation list!');
-                                done();
-                            });
-                            _.each(quality.stations, function (station) {
-                                var overdueStation = { station_id : station};
-                                OverdueStation.create(overdueStation, function (err, result) {
-                                    if (err) {
-                                        //console.log("Fail to insert OverdueStation : " + err);
-                                    } else {
-
-                                    }
-                                    finished();
-                                });
-                            });
-                        }
-                    });
-                    **/
-                }
-                done();
-            });
+            overdueAirQualities.push(overdueAirQuality);
+        });
+        OverdueAirQuality.create(overdueAirQualities, function (err, result) {
+            if (err) {
+                console.log('err insert OverdueAirQuality list!' + err);
+                return callback(err);
+            } else {
+                console.log('done insert OverdueAirQuality list!');
+                return callback(null);
+            }
         });
     });
 });
