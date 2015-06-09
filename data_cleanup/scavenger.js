@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 40 17 * * *', 
+	this.job = new CronJob('00 00 18 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -42,7 +42,8 @@ function cleanup () {
 			return;
 		} else {
 			console.log("Success to prepare quality data 2 days before!");
-      		removeOverdueAirQuality(result);
+      		//removeOverdueAirQuality(result);
+      		doRemoval(result);
 		}
 	});
 }
@@ -66,6 +67,15 @@ function removeOverdueAirQuality(airQualities) {
 		console.log("Finish removing overdue air quality");
 		//callback(null);
 	}).start();
+}
+
+function doRemoval(airQualities) {
+	console.log("Removing overdue air quality ... ");
+	_.each(airQualities, function (airQuality) {
+		removeDetail(airQuality._id, function(err) {
+			console.log("Finish removing overdue air quality");
+		});
+	});
 }
 
 function removeDetail(aqid, done) {
