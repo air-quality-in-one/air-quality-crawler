@@ -10,7 +10,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 41 15 * * *', 
+	this.job = new CronJob('00 45 15 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -34,7 +34,7 @@ function cleanup () {
 		}
 	});*/
 
-	AirQuality.prepareDataXDaysBefore(2, function (error, result) {
+	AirQuality.prepareDataXDaysBefore(4, function (error, result) {
 		if (error) {
 			console.log("Fail to prepare quality data 2 days before!");
 			return;
