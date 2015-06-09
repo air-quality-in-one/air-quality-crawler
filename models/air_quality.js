@@ -132,22 +132,13 @@ AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
         }
     };
     this.find(query).select('_id').exec(function (err, qualityArray) {
-        //console.log("Try to remove AirQuality : " + JSON.stringify(qualityArray));
-        console.log("Try to prepare AirQuality, total number : " + qualityArray.length);
-        var overdueAirQualities = [];
-        _.each(qualityArray, function (quality) {
-            var overdueAirQuality = { air_quality_id : quality._id };
-            overdueAirQualities.push(overdueAirQuality);
-        });
-        OverdueAirQuality.create(overdueAirQualities, function (err, result) {
-            if (err) {
-                console.log('err insert OverdueAirQuality list!' + err);
-                return callback(err);
-            } else {
-                console.log('done insert OverdueAirQuality list!');
-                return callback(null);
-            }
-        });
+        if (err) {
+            console.log("Fail to load OverdueAirQuality!");
+            return callback(err, null);
+        } else {
+            console.log("Load OverdueAirQuality, total number : " + qualityArray.length);
+            return callback(null, qualityArray);
+        }
     });
 });
 

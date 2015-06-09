@@ -12,7 +12,7 @@ var Summary = require('../models/quality_summary');
 var AirQuality = require('../models/air_quality');
 
 var Parser = require('./parser');
-var Queue = require('./job_queue');
+var Queue = require('../utils/job_queue');
 
 var reloadCity = true;
 
