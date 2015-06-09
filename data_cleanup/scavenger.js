@@ -9,7 +9,7 @@ var AQIHistory = require('../models/aqi_history');
 var OverdueAirQuality = require('../models/overdue_air_quality');
 
 function Scavenger() {
-	this.job = new CronJob('00 37 14 * * *', 
+	this.job = new CronJob('00 55 14 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
