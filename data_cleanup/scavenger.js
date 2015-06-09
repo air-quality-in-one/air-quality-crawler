@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 30 18 * * *', 
+	this.job = new CronJob('00 35 18 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -77,7 +77,7 @@ function doRemoval(airQualities) {
 	_.each(airQualities, function (airQuality) {
 		airQualityIds.push(airQuality._id);
 		summaryIds.push(airQuality.summary);
-		stationIds.push(airQuality.stations);
+		stationIds.push.apply(stationIds, airQuality.stations);
 	});
 	console.log("airQualityIds length : " + airQualityIds.length);
 	console.log("summaryIds length : " + summaryIds.length);
