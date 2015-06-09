@@ -4,13 +4,15 @@ var _ = require('lodash');
 var moment = require('moment-timezone');
 var CronJob = require('cron').CronJob;
 var AirQuality = require('../models/air_quality');
+var Station = require('../models/station_detail');
+var Summary = require('../models/quality_summary');
 var AQIHistory = require('../models/aqi_history');
 
 var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 50 15 * * *', 
+	this.job = new CronJob('00 20 16 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -40,7 +42,7 @@ function cleanup () {
 			return;
 		} else {
 			console.log("Success to prepare quality data 2 days before!");
-      removeOverdueAirQuality(result);
+      		removeOverdueAirQuality(result);
 		}
 	});
 }
@@ -65,6 +67,29 @@ function removeOverdueAirQuality(airQualities) {
 }
 
 function removeDetail(aqid, done) {
+	AirQuality.findById(aqid, function (err, airQuality) {
+		if (err) {
+			console.log("Fail to remove air quality : " + aqid);
+			return done(err);
+		} else {
+			Station.remove({ id: { $in: airQuality.stations } }, function (err) {
+				if (err) {
+					console.log("Fail to remove stations : " + airQuality.stations);
+					return done(err);
+				} else {
+					Summary.findByIdAndRemove(airQuality.summary, function (err) {
+						if (err) {
+							console.log("Fail to remove summary : " + airQuality.summary);
+							return done(err);
+						} else {
+							airQuality.remove();
+							return done(null);
+						}
+					});
+				}
+			});
+		}
+	});
 }
 
 
