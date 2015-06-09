@@ -7,7 +7,7 @@ var Collector = require('./collector');
 var loading = false;
 
 function Acquirer () {
-	this.job = new CronJob('00 15 * * * *', 
+	this.job = new CronJob('00 53 * * * *', 
 		loadData, null, false, 'Asia/Shanghai');
 }
 
