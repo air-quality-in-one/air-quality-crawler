@@ -7,15 +7,15 @@ var Collector = require('./collector');
 var loading = false;
 
 function Acquirer () {
-	this.job = new CronJob('00 15 * * * *', 
+	this.job = new CronJob('00 15 * * * *',
 		loadData, null, false, 'Asia/Shanghai');
 }
 
 Acquirer.prototype.start = function () {
 	var self = this;
-	console.log("acquiring data ... ");
+	console.log("starting data acquirer ... ");
 	self.job.start();
-	//loadData();
+	console.log("successfully start data acquirer!");
 }
 
 

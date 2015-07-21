@@ -35,34 +35,6 @@ var AirQualitySchema = new Schema({
     }],
 });
 
-AirQualitySchema.pre('remove', function (next) {
-    var airQuality = this;
-    //console.log("before remove airQuality : " + JSON.stringify(airQuality));
-    //console.log("try to remove summary: " + airQuality.summary);
-    Summary.findOneAndRemove({"_id" : airQuality.summary}, function (err) {
-        if (err) {
-            console.log("fail to remove summary: " + airQuality.summary);
-        } else {
-            //console.log("success to remove summary: " + airQuality.summary);
-        }
-        //console.log("try to remove stations: " + JSON.stringify(airQuality.stations));
-        var done = _.after(airQuality.stations.length, function() {
-            //console.log('done remove stations!');
-            return next();
-        });
-        _.each(airQuality.stations, function (station) {
-            Station.findOneAndRemove({"_id" : station}, function (err) {
-                if (err) {
-                    console.log("fail to remove station: " + station);
-                } else {
-                    //console.log("success to remove station: " + station);
-                }
-                done();
-            });
-        });
-    });
-});
-
 AirQualitySchema.static('loadDataXDaysBefore', function(day, callback) {
     var startTime = DateUtil.getStartOfXDayBefore(day);
     var endTime = DateUtil.getStartOfXDayBefore(day-1);
@@ -85,38 +57,6 @@ AirQualitySchema.static('loadDataXDaysBefore', function(day, callback) {
     });
 });
 
-
-AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
-    var startTime = DateUtil.getStartOfXDayBefore(day);
-    var endTime = DateUtil.getStartOfXDayBefore(day-1);
-    console.log("Try to remove AirQuality between " + endTime + " and " + startTime);
-    var query = {
-        "time_update" : {
-            "$gte" : startTime,
-            "$lt" : endTime
-        }
-    };
-    this.find(query).exec(function (err, qualityArray) {
-        //console.log("Try to remove AirQuality : " + JSON.stringify(qualityArray));
-        console.log("Try to remove AirQuality, total number : " + qualityArray.length);
-        var done = _.after(qualityArray.length, function() {
-            console.log('done remove AirQuality list!');
-            return callback(null);
-        });
-        _.each(qualityArray, function (quality) {
-            quality.remove(function(err) {
-                if (err) {
-                    console.log("Fail to remove AirQuality : " + err);
-
-                } else {
-                    //console.log("Success to remove AirQuality!");
-                }
-                done();
-            });
-        });
-
-    });
-});
 
 AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
     var startTime = DateUtil.getStartOfXDayBefore(day);

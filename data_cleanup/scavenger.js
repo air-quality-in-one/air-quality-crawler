@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 30 18 * * *',
+	this.job = new CronJob('00 30 13 * * *',
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -26,18 +26,8 @@ Scavenger.prototype.start = function () {
 
 function cleanup () {
 	console.log("cleanning up data ... ");
-	/*AirQuality.removeDataXDaysBefore(2, function (error) {
-		if (error) {
-			console.log("Fail to clean up quality data 2 days before!");
-			return;
-		} else {
-			console.log("Success to clean up quality data 2 days before!");
-			return;
-		}
-	});*/
-
 	var queue = new Queue('remove_overdue_data_job');
-	_.each(_.range(2, 180), function (day) {
+	_.each(_.range(2, 30), function (day) {
 		queue.createJob({day : day}, function (err, document) {
 			if (err) {
 				console.log("Error when create job for " + day);
@@ -50,7 +40,7 @@ function cleanup () {
 	queue.onJob(function (job, done) {
 		removeOverdueData(job.day, done);
 	}).onFinished(function () {
-		console.log("Finish all jobs");
+		console.log("Finish clean up overdue data!");
 	}).start();
 }
 
