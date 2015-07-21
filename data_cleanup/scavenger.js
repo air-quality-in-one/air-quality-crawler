@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 00 18 * * *',
+	this.job = new CronJob('00 30 18 * * *',
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -89,17 +89,17 @@ function doRemoval(airQualities, done) {
 	console.log("summaryIds length : " + summaryIds.length);
 	console.log("stationIds length : " + stationIds.length);
 
-	Station.remove({ id: { $in: stationIds } }, function (err) {
+	Station.remove({ _id: { $in: stationIds } }, function (err) {
 		if (err) {
 			console.log("Fail to remove stations!");
 			return done(err);
 		} else {
-			Summary.remove({ id: { $in: summaryIds } }, function (err) {
+			Summary.remove({ _id: { $in: summaryIds } }, function (err) {
 				if (err) {
 					console.log("Fail to remove summary!");
 					return done(err);
 				} else {
-					AirQuality.remove({ id: { $in: airQualityIds } }, function(err) {
+					AirQuality.remove({ _id: { $in: airQualityIds } }, function(err) {
 						if (err) {
 							console.log("Fail to remove AirQuality!");
 							return done(err);
