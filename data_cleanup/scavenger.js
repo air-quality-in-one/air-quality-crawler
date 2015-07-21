@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 55 15 * * *',
+	this.job = new CronJob('00 45 17 * * *',
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -61,16 +61,15 @@ function removeOverdueData(day, done) {
 			return done("error");
 		} else {
 			console.log("Success to prepare quality data " + day + " days before!");
-			return done(null);
-      		/*
-      		doRemoval(result, function (err) {
+      doRemoval(result, function (err) {
       			if (err) {
       				console.log("Fail to clean up quality data 2 days before!");
+							return done("remove error");
       			} else {
       				console.log("Success to clean up quality data 2 days before!");
+							return done(null);
       			}
       		});
-			*/
 		}
 	});
 }
