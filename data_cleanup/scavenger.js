@@ -43,6 +43,7 @@ function cleanup () {
 		} else {
 			console.log("Success to prepare quality data 2 days before!");
       		//removeOverdueAirQuality(result);
+      		/*
       		doRemoval(result, function (err) {
       			if (err) {
       				console.log("Fail to clean up quality data 2 days before!");
@@ -50,6 +51,7 @@ function cleanup () {
       				console.log("Success to clean up quality data 2 days before!");
       			}
       		});
+*/
 		}
 	});
 }
