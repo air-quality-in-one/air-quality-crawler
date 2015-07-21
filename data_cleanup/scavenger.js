@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 45 14 * * *', 
+	this.job = new CronJob('00 00 15 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -37,7 +37,7 @@ function cleanup () {
 	});*/
 
 	var queue = new Queue('remove_overdue_data_job');
-	for (day = 2; day < 30; day ++) {
+	_.each(_.range(2, 30), function (day) {
 		queue.createJob({day : day}, function (err, document) {
 			if (err) {
 				console.log("Error when create job for " + day);
