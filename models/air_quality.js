@@ -88,12 +88,12 @@ AirQualitySchema.static('loadDataXDaysBefore', function(day, callback) {
 
 AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
     var startTime = DateUtil.getStartOfXDayBefore(day);
-    //var endTime = DateUtil.getStartOfXDayBefore(day-1);
-    console.log("Try to remove AirQuality before " + startTime);
+    var endTime = DateUtil.getStartOfXDayBefore(day-1);
+    console.log("Try to remove AirQuality between " endTime + " and " + startTime);
     var query = {
         "time_update" : {
-            //"$gte" : startTime,
-            "$lt" : startTime
+            "$gte" : startTime,
+            "$lt" : endTime
         }
     };
     this.find(query).exec(function (err, qualityArray) {
@@ -120,12 +120,12 @@ AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
 
 AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
     var startTime = DateUtil.getStartOfXDayBefore(day);
-    //var endTime = DateUtil.getStartOfXDayBefore(day-1);
-    console.log("Try to prepare AirQuality before " + startTime);
+    var endTime = DateUtil.getStartOfXDayBefore(day-1);
+    console.log("Try to remove AirQuality between " endTime + " and " + startTime);
     var query = {
         "time_update" : {
-            //"$gte" : startTime,
-            "$lt" : startTime
+            "$gte" : startTime,
+            "$lt" : endTime
         }
     };
     this.find(query).select('_id').exec(function (err, qualityArray) {

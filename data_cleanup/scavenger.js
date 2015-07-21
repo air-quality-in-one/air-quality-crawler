@@ -12,7 +12,7 @@ var Queue = require('../utils/job_queue');
 
 
 function Scavenger() {
-	this.job = new CronJob('00 15 14 * * *', 
+	this.job = new CronJob('00 45 14 * * *', 
 		cleanup, null, false, 'Asia/Shanghai');
 }
 
@@ -36,7 +36,27 @@ function cleanup () {
 		}
 	});*/
 
-	AirQuality.prepareDataXDaysBefore(2, function (error, result) {
+	var queue = new Queue('remove_overdue_data_job');
+	for (day = 2; day < 30; day ++) {
+		queue.createJob({day : day}, function (err, document) {
+			if (err) {
+				console.log("Error when create job for " + day);
+			} else {
+				//console.log("Success to create job : " + JSON.stringify(document));
+			}
+		});
+	}
+
+	queue.onJob(function (job, done) {
+		removeOverdueData(job.day, done);
+	}).onFinished(function () {
+		console.log("Finish all jobs");
+		callback(null);
+	}).start();
+}
+
+function removeOverdueData(day) {
+	AirQuality.prepareDataXDaysBefore(day, function (error, result) {
 		if (error) {
 			console.log("Fail to prepare quality data 2 days before!");
 			return;
@@ -51,7 +71,7 @@ function cleanup () {
       				console.log("Success to clean up quality data 2 days before!");
       			}
       		});
-*/
+			*/
 		}
 	});
 }
