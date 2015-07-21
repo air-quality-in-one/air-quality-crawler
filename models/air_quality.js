@@ -107,14 +107,14 @@ AirQualitySchema.static('removeDataXDaysBefore', function(day, callback) {
             quality.remove(function(err) {
                 if (err) {
                     console.log("Fail to remove AirQuality : " + err);
-                    
+
                 } else {
                     //console.log("Success to remove AirQuality!");
                 }
                 done();
             });
         });
-        
+
     });
 });
 
@@ -128,8 +128,7 @@ AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
             "$lt" : endTime
         }
     };
-    this.find(query).select('_id').exec(function (err, qualityArray) {
-    //this.find(query).select('_id  summary  stations').exec(function (err, qualityArray) {
+    this.find(query).select('_id  summary  stations').exec(function (err, qualityArray) {
         if (err) {
             console.log("Fail to load OverdueAirQuality!");
             return callback(err, null);
