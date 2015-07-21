@@ -128,7 +128,8 @@ AirQualitySchema.static('prepareDataXDaysBefore', function(day, callback) {
             "$lt" : startTime
         }
     };
-    this.find(query).select('_id  summary  stations').exec(function (err, qualityArray) {
+    this.find(query).select('_id').exec(function (err, qualityArray) {
+    //this.find(query).select('_id  summary  stations').exec(function (err, qualityArray) {
         if (err) {
             console.log("Fail to load OverdueAirQuality!");
             return callback(err, null);
