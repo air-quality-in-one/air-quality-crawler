@@ -45,7 +45,7 @@ function cleanup () {
 				//console.log("Success to create job : " + JSON.stringify(document));
 			}
 		});
-	}
+	});
 
 	queue.onJob(function (job, done) {
 		removeOverdueData(job.day, done);
